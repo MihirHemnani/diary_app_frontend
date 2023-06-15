@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import './Navbar.css'
 
 const Navbar = () => {
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg navbar navbar-dark bg-dark fixed-top p-2">
                 <div className="container-fluid">
                     <Link to='/' className="navbar-brand">Dairy</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
