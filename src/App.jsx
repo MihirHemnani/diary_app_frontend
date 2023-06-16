@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Resgister from './pages/Register'
 import Error404 from './pages/Error404'
+import DairyPost from './pages/DairyPost'
+import CreatePost from './pages/CreatePost'
 // import Navbar from './pages/Navbar'
 
 const App = () => {
@@ -17,6 +19,8 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Resgister />} />
+                <Route path='/api/posts/:id' element={<DairyPost />} />
+                <Route path='/createpost' element={<CreatePost />} />
                 <Route path="/*" element={<Error404 />} />
             </Routes>
         </Router>

@@ -14,13 +14,25 @@ const Navbar = () => {
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
 
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Link to='/' className="nav-link active" aria-current="page">Home</Link>
-                            </li>
+
+                            {/* <li className="nav-item">
+                                <Link to='/createpost' className="nav-link" aria-current="page">Create</Link>
+                                <Link to='/' className="navbar-brand active">Dairy</Link>
+                            </li> */}
                         </ul>
                         <form className="d-flex">
-                            <Link to='/login' className="btn btn-outline-success" style={{ marginRight: "1rem" }} >Login</Link>
-                            <Link to='/register' className="btn btn-outline-success">Register</Link>
+                            <ul className="navbar-nav">
+
+                                <li className="nav-item">
+                                    <Link to='/createpost' className="nav-link" aria-current="page">Create</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to='/login' className="nav-link">Login</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to='/register' className="nav-link">Register</Link>
+                                </li>
+                            </ul>
                         </form>
                     </div>
                 </div>
