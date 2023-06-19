@@ -93,7 +93,3 @@ const Login = () => {
 }
 
 export default Login
-
-
-// "hemnani@gmail.com"
-// "123mihir@Mihir"
