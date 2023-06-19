@@ -5,11 +5,13 @@ import PostDetails from "../components/PostDetails";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Spinner } from "../components/Spinner.jsx";
+import { useAuthContext } from "../hooks/useAuthContext.js";
 
 const Home = () => {
     // don't use useState for global state management
     // const [posts, setposts] = useState([]);
 
+    const { user } = useAuthContext();
     const { posts, dispatch } = usePostsContext();
 
     // use effect hook => so that when page is rendered first time data is being fetched 
@@ -20,7 +22,11 @@ const Home = () => {
         const fetchPosts = async () => {
             // fetch from api
             try {
-                const response = await fetch("http://localhost:8000/api/posts");
+                const response = await fetch("http://localhost:8000/api/posts", {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    },
+                });
                 const json_form = await response.json()
 
                 if (response.ok) {
@@ -36,7 +42,7 @@ const Home = () => {
 
         // calling the function
         fetchPosts();
-    }, [dispatch])
+    }, [user, dispatch])
 
 
     return (
@@ -46,16 +52,25 @@ const Home = () => {
                 ?
                 <Spinner />
                 :
-                <div className="min-vh-100" style={{ position: "relative", marginTop: '4rem' }}>
-                    <h1 className="p-2">Posts</h1>
-                    <div className="row" style={{ marginLeft: "0", marginRight: "0" }}>
+                <div className="min-vh-100" style={{ position: "relative", marginTop: '5rem' }}>
+                    <h1 className="p-2" style={{ textAlign: "center" }}>Posts</h1>
+                    <div className="row mb-3" style={{ marginLeft: "0", marginRight: "0" }}>
                         {
-                            posts.map((post) => (
-                                <PostDetails key={post._id} post={post} setContentFull="NO" />
-                            ))
+                            posts.length === 0
+                                ?
+                                (
+                                    <p style={{ textAlign: 'center' }}>No posts to display</p>
+                                )
+                                :
+                                (
+                                    posts.map((post) => (
+                                        <PostDetails key={post._id} post={post} setContentFull="NO" />
+                                    ))
+                                )
                         }
                     </div>
-                </div>}
+                </div>
+            }
 
             <Footer />
         </>

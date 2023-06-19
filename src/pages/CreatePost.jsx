@@ -2,10 +2,11 @@ import { useForm } from 'react-hook-form'
 import { usePostsContext } from '../hooks/usePostsContext';
 import Navbar from "./Navbar"
 import Footer from './Footer';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const CreatePost = () => {
     const { dispatch } = usePostsContext();
-
+    const { user } = useAuthContext();
     // eslint-disable-next-line
     const { register, handleSubmit, setError, reset, formState: { errors } } = useForm();
 
@@ -18,11 +19,12 @@ const CreatePost = () => {
 
         try {
             const response = await fetch(`http://localhost:8000/api/posts`, {
-                method: 'POST',
-                body: JSON.stringify(post),
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify(post)
             });
 
             const body = await response.text()
@@ -43,7 +45,7 @@ const CreatePost = () => {
     return (
         <>
             <Navbar />
-            <div className="card min-vh-100">
+            <div className="card min-vh-100 mt-4">
                 <h5 className="card-title mt-5 p-3 m-auto">Create New Post</h5>
                 <div className="card-body m-auto">
 

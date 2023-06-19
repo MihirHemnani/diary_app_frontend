@@ -1,14 +1,48 @@
 import { Link } from "react-router-dom"
+import { useForm } from 'react-hook-form'
 import Navbar from "./Navbar"
 import Footer from "./Footer"
 
 const Resgister = () => {
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+    const onSubmit = async data => {
+        const register_user = {
+            username: data.username,
+            email: data.email,
+            password: data.password
+        }
+        console.log(data);
+        try {
+            const response = await fetch(`http://localhost:8000/api/user/signup`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(register_user)
+            })
+
+            // eslint-disable-next-line
+            const body = await response.text()
+
+            if (response.ok) {
+                reset({ username: "", email: "", password: "" });
+                console.log("Successfully Registered....")
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+
+
+    }
+
     return (
         <>
             <Navbar />
             <div className="container">
                 <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center">
-                    <div className="container">
+                    <div className="container" style={{ marginTop: "5rem", marginBottom: "3rem" }}>
                         <div className="row justify-content-center">
                             <div className="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
@@ -28,32 +62,35 @@ const Resgister = () => {
                                             <p className="text-center small">Enter your personal details to create account</p>
                                         </div>
 
-                                        <form className="row g-3 needs-validation" novalidate>
-                                            <div className="col-12">
-                                                <label for="yourName" className="form-label">Your Name</label>
-                                                <input type="text" name="name" className="form-control" id="yourName" required />
-                                                <div className="invalid-feedback">Please, enter your name!</div>
-                                            </div>
+                                        <form className="row g-3 needs-validation" onSubmit={handleSubmit(onSubmit)}>
 
                                             <div className="col-12">
-                                                <label for="yourEmail" className="form-label">Your Email</label>
-                                                <input type="email" name="email" className="form-control" id="yourEmail" required />
-                                                <div className="invalid-feedback">Please enter a valid Email adddress!</div>
-                                            </div>
-
-                                            <div className="col-12">
-                                                <label for="yourUsername" className="form-label">Username</label>
+                                                <label htmlFor="yourUsername" className="form-label">Username</label>
                                                 <div className="input-group has-validation">
-                                                    <span className="input-group-text" id="inputGroupPrepend">@</span>
-                                                    <input type="text" name="username" className="form-control" id="yourUsername" required />
-                                                    <div className="invalid-feedback">Please choose a username.</div>
+                                                    <input type="text"
+                                                        autoComplete="off"
+                                                        {...register("username", { required: 'required field' })}
+                                                        className="form-control" id="yourUsername" />
+                                                    <p>{errors.username?.message}</p>
                                                 </div>
                                             </div>
 
                                             <div className="col-12">
-                                                <label for="yourPassword" className="form-label">Password</label>
-                                                <input type="password" name="password" className="form-control" id="yourPassword" required />
-                                                <div className="invalid-feedback">Please enter your password!</div>
+                                                <label htmlFor="yourEmail" className="form-label">Your Email</label>
+                                                <input type="email"
+                                                    {...register("email", { required: 'required field' })}
+                                                    className="form-control" id="yourEmail" />
+                                                <p>{errors.email?.message}</p>
+                                            </div>
+
+
+                                            <div className="col-12">
+                                                <label htmlFor="yourPassword" className="form-label">Password</label>
+                                                <input type="password"
+                                                    autoComplete="off"
+                                                    {...register("password", { required: 'required field' })}
+                                                    className="form-control" id="yourPassword" />
+                                                <p>{errors.password?.message}</p>
                                             </div>
 
                                             {/* <div className="col-12">
@@ -69,7 +106,7 @@ const Resgister = () => {
                                                 <button className="btn btn-primary w-100" type="submit">Create Account</button>
                                             </div>
                                             <div className="col-12">
-                                                <p className="small mb-0">Already have an account? <Link to="/login">Log in</Link></p>
+                                                <p className="small mb-0">Already have an account? <Link to="/api/login">Log in</Link></p>
                                             </div>
                                         </form>
 

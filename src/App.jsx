@@ -1,6 +1,7 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import './App.css'
+import { useAuthContext } from './hooks/useAuthContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Resgister from './pages/Register'
@@ -10,17 +11,17 @@ import CreatePost from './pages/CreatePost'
 // import Navbar from './pages/Navbar'
 
 const App = () => {
-
+    const {user} = useAuthContext();
 
     return (
         <>
         <Router>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Resgister />} />
-                <Route path='/api/posts/:id' element={<DairyPost />} />
-                <Route path='/createpost' element={<CreatePost />} />
+                <Route path="/" element={user ? <Home /> : <Navigate to='/api/login'/>} />
+                <Route path="/api/login" element={!user ? <Login /> : <Navigate to='/'/>} />
+                <Route path="/api/register" element={!user ? <Resgister /> : <Navigate to='/'/> } />
+                <Route path='/api/posts/:id' element={user ? <DairyPost /> : <Navigate to='/api/login'/>} />
+                <Route path='/api/createpost' element={user ? <CreatePost /> : <Navigate to='/api/login'/>} />
                 <Route path="/*" element={<Error404 />} />
             </Routes>
         </Router>

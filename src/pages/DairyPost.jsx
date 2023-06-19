@@ -4,17 +4,23 @@ import PostDetails from "../components/PostDetails";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Spinner } from "../components/Spinner";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const DairyPost = () => {
+    const { user } = useAuthContext();
     const { id } = useParams();
     const [post, setPost] = useState(null);
     useEffect(() => {
         const fetchPost = async () => {
             // fetch
             try {
-                const response = await fetch(`http://localhost:8000/api/posts/${id}`);
+                const response = await fetch(`http://localhost:8000/api/posts/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                });
                 const json = await response.json();
-                console.log(json);
+                // console.log(json);
                 if (response.ok) {
                     setPost(json);
                 }
@@ -23,7 +29,7 @@ const DairyPost = () => {
             }
         }
         fetchPost()
-    }, [id])
+    }, [user, id])
 
     return (
         <>
