@@ -28,7 +28,7 @@ const CreatePost = () => {
             });
 
             const body = await response.text()
-            const newPost = JSON.parse(body)
+            const newPost = await JSON.parse(body)
 
             if (response.ok) {
                 reset({ title: "", date: new Date().toISOString().slice(0, 10), content: "" });
