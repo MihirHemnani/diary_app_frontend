@@ -18,7 +18,7 @@ const CreatePost = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:8000/api/posts`, {
+            const response = await fetch(`https://dairy-post-api.onrender.com/api/posts`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ const DairyPost = () => {
         const fetchPost = async () => {
             // fetch
             try {
-                const response = await fetch(`http://localhost:8000/api/posts/${id}`, {
+                const response = await fetch(`https://dairy-post-api.onrender.com/api/posts/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${user.token}`
                     }

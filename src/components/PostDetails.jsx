@@ -13,7 +13,7 @@ const PostDetails = ({ post, setContentFull }) => {
     const handleDelete = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch(`http://localhost:8000/api/posts/${post._id}`, {
+            const response = await fetch(`https://dairy-post-api.onrender.com/api/posts/${post._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${user.token}`
