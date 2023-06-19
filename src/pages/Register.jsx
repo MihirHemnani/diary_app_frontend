@@ -12,7 +12,7 @@ const Resgister = () => {
             email: data.email,
             password: data.password
         }
-        console.log(data);
+        // console.log(data);
         try {
             const response = await fetch(`https://dairy-post-api.onrender.com/api/user/signup`, {
                 method: "POST",
@@ -27,7 +27,7 @@ const Resgister = () => {
 
             if (response.ok) {
                 reset({ username: "", email: "", password: "" });
-                console.log("Successfully Registered....")
+                // console.log("Successfully Registered....")
             }
 
         } catch (err) {
