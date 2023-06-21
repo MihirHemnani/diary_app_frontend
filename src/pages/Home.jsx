@@ -53,7 +53,7 @@ const Home = () => {
                 ?
                 <Spinner />
                 :
-                <div className="min-vh-100" style={{ position: "relative", marginTop: '5rem' }}>
+                <div className="min-vh-100" style={{ position: "relative", marginTop: '6rem' }}>
                     <h1 className="p-2" style={{ textAlign: "center" }}>Posts</h1>
                     <div className="row mb-3" style={{ marginLeft: "0", marginRight: "0" }}>
                         {
