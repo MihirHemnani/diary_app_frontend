@@ -43,7 +43,7 @@ const CreatePost = () => {
     return (
         <>
             <Navbar />
-            <div className="card min-vh-100 mt-4">
+            <div className="card min-vh-100 mt-5">
                 <h5 className="card-title mt-5 p-3 m-auto">Create New Post</h5>
                 <div className="card-body m-auto">
 
@@ -64,8 +64,9 @@ const CreatePost = () => {
                                 <div className="form-floating">
                                     <input type="date" className="form-control" id="floatingCity"
                                         {...register("date", { required: 'required field' })}
-                                        min={new Date().toISOString().slice(0, 10)}
-                                        defaultValue={new Date().toISOString().slice(0, 10)} />
+                                        defaultValue={new Date().toISOString().slice(0, 10)}
+                                        readOnly
+                                    />
                                     <label htmlFor="floatingCity">Date</label>
                                 </div>
                                 <p>{errors.date?.message}</p>
