@@ -5,6 +5,7 @@ import { usePostsContext } from "../hooks/usePostsContext.js";
 import './PostDetails.css'
 import { useAuthContext } from "../hooks/useAuthContext.js";
 import { useForm } from "react-hook-form";
+import swal from "sweetalert";
 
 export const SinglePost = ({ post }) => {
     const { user } = useAuthContext();
@@ -49,6 +50,9 @@ export const SinglePost = ({ post }) => {
             if (response.ok) {
                 dispatch({ type: 'EDIT_POST', payload: newPost })
                 setContent(false)
+                swal("Information", "Editted Successfully...", "info");
+            } else {
+                swal("Warning!", "Edit Unsuccessfull...", "error");
             }
 
         } catch (err) {
@@ -78,8 +82,8 @@ export const SinglePost = ({ post }) => {
 
                     :
                     (
-                        < div className="card min-vh-100 mt-4">
-                            <h5 className="card-title mt-5 p-3 m-auto">Edit Post</h5>
+                        < div className="card min-vh-100 mt-5">
+                            <h4 className="card-title mt-5 p-3 m-auto">Edit Post</h4>
                             <div className="card-body m-auto">
 
                                 {/* floating form */}

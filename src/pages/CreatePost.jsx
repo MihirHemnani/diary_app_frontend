@@ -3,6 +3,7 @@ import { usePostsContext } from '../hooks/usePostsContext';
 import Navbar from "./Navbar"
 import Footer from './Footer';
 import { useAuthContext } from '../hooks/useAuthContext';
+import swal from 'sweetalert';
 
 const CreatePost = () => {
     const { dispatch } = usePostsContext();
@@ -33,6 +34,10 @@ const CreatePost = () => {
             if (response.ok) {
                 reset({ title: "", date: new Date().toISOString().slice(0, 10), content: "" });
                 dispatch({ type: 'CREATE_POST', payload: newPost })
+                swal("Success!", "Post Created Successfully", "success");
+            } else {
+                swal("Oops!", newPost.error, "error");
+
             }
 
         } catch (err) {

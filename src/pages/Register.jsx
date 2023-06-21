@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { useForm } from 'react-hook-form'
 import Navbar from "./Navbar"
 import Footer from "./Footer"
+import swal from "sweetalert"
 
 const Resgister = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -23,12 +24,16 @@ const Resgister = () => {
             })
 
             // eslint-disable-next-line
-            const body = await response.text()
+            const json = await response.json()
 
             if (response.ok) {
                 reset({ username: "", email: "", password: "" });
-                // console.log("Successfully Registered....")
+                swal("Success!", "Successfully Registered...", "success");
+
+            } else {
+                swal("Warning!", json.error, "warning");
             }
+            console.log(json)
 
         } catch (err) {
             console.log(err);

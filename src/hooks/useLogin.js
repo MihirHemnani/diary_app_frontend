@@ -1,14 +1,11 @@
-import { useState } from 'react'
 import { useAuthContext } from './useAuthContext'
-
+import swal from 'sweetalert';
 ////////////////
 // why state
 // to know whether user is login or not
 /////////////////
 
 export const useLogin = () => {
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(null);
 
     const { dispatch } = useAuthContext();
 
@@ -16,7 +13,6 @@ export const useLogin = () => {
         // console.log(email + password)
         // console.log(JSON.stringify({ email, password }))
         try {
-            setLoading(true);
             // const response = await fetch(`http://localhost:8000/api/user/login`, {
             const response = await fetch(`https://dairy-post-api.onrender.com/api/user/login`, {
                 method: "POST",
@@ -27,13 +23,12 @@ export const useLogin = () => {
             });
             const json = await response.json();
             if (!response.ok) {
-                setLoading(false)
-                setError(json.error)
+                swal("Oops!", json.error, "warning");
             } else {
                 localStorage.setItem('dairy_user', JSON.stringify(json))
                 dispatch({ type: "LOGIN", payload: json })
+                swal("Success!", "Login Successfull...", "success");
                 // console.log(json)
-                setLoading(false);
             }
 
         } catch (err) {
@@ -42,6 +37,6 @@ export const useLogin = () => {
     }
 
     return {
-        login, error, loading
+        login
     }
 }

@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import { usePostsContext } from "../hooks/usePostsContext.js";
 import './PostDetails.css'
 import { useAuthContext } from "../hooks/useAuthContext.js";
+import swal from "sweetalert";
 
 const PostDetails = ({ post }) => {
     // console.log(post);
@@ -26,7 +27,10 @@ const PostDetails = ({ post }) => {
 
             if (response.ok) {
                 dispatch({ type: 'DELETE_POST', payload: json })
-            };
+                swal("Success!", "Post Deleted successfully...", "success");
+            } else {
+                swal.fire("Oops!", json.error, "error");
+            }
 
         } catch (err) {
             console.log(err);
