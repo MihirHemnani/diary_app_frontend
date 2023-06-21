@@ -8,12 +8,12 @@ const Login = () => {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // eslint-disable-next-line
-    const { login } = useLogin();
+    const { login, reset_ } = useLogin();
 
     const onSubmit = async (data) => {
         // console.log(data)
         await login(data.email, data.password)
-        reset({ email: '', password: '' })
+        if (reset_) reset({ email: '', password: '' });
     }
 
     return (

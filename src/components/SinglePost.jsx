@@ -14,7 +14,7 @@ export const SinglePost = ({ post }) => {
     // eslint-disable-next-line
     const { register, handleSubmit, setError, reset, formState: { errors } } = useForm();
 
-    const [singlepost, setSinglePost] = useState(
+    var [singlepost, setSinglePost] = useState(
         {
             postTitle: post.title,
             postDate: post.date,
@@ -52,6 +52,7 @@ export const SinglePost = ({ post }) => {
                 setContent(false)
                 swal("Information", "Editted Successfully...", "info");
             } else {
+                singlepost = post
                 swal("Warning!", "Edit Unsuccessfull...", "error");
             }
 
