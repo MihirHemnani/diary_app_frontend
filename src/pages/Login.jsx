@@ -12,8 +12,7 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         // console.log(data)
-        await login(data.email, data.password)
-        if (reset_) reset({ email: '', password: '' });
+        await login(data.email, data.password, reset)
     }
 
     return (

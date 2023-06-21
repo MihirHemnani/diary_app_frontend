@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useAuthContext } from './useAuthContext'
 import swal from 'sweetalert';
 ////////////////
@@ -9,9 +8,8 @@ import swal from 'sweetalert';
 export const useLogin = () => {
 
     const { dispatch } = useAuthContext();
-    const [reset_, setReset] = useState(true);
 
-    const login = async (email, password) => {
+    const login = async (email, password, reset) => {
         // console.log(email + password)
         // console.log(JSON.stringify({ email, password }))
         try {
@@ -25,9 +23,9 @@ export const useLogin = () => {
             });
             const json = await response.json();
             if (!response.ok) {
-                setReset(false);
                 swal("Oops!", json.error, "warning");
             } else {
+                reset({ email: "", password: "" });
                 localStorage.setItem('dairy_user', JSON.stringify(json))
                 dispatch({ type: "LOGIN", payload: json })
                 swal("Success!", "Login Successfull...", "success");
@@ -40,6 +38,6 @@ export const useLogin = () => {
     }
 
     return {
-        login, reset_
+        login
     }
 }
