@@ -35,7 +35,7 @@ export const SinglePost = ({ post }) => {
 
         try {
             // const response = await fetch(`http://localhost:8000/api/posts/${post._id}`, {
-            const response = await fetch(`https://dairy-post-api.onrender.com/api/posts`, {
+            const response = await fetch(`https://dairy-post-api.onrender.com/api/posts/${post._id}`, {
                 method: "PATCH",
                 headers: {
                     'Content-Type': 'application/json',
