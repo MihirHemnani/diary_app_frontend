@@ -22,6 +22,7 @@ const Home = () => {
         const fetchPosts = async () => {
             // fetch from api
             try {
+                // const response = await fetch("http://localhost:8000/api/posts", {
                 const response = await fetch("https://dairy-post-api.onrender.com/api/posts", {
                     headers: {
                         'Authorization': `Bearer ${user.token}`
@@ -64,7 +65,7 @@ const Home = () => {
                                 :
                                 (
                                     posts.map((post) => (
-                                        <PostDetails key={post._id} post={post} setContentFull="NO" />
+                                        <PostDetails key={post._id} post={post} />
                                     ))
                                 )
                         }

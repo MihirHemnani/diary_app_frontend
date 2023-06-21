@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import PostDetails from "../components/PostDetails";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Spinner } from "../components/Spinner";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { SinglePost } from "../components/SinglePost";
 
 const DairyPost = () => {
     const { user } = useAuthContext();
@@ -15,12 +15,12 @@ const DairyPost = () => {
             // fetch
             try {
                 const response = await fetch(`https://dairy-post-api.onrender.com/api/posts/${id}`, {
+                    // const response = await fetch(`http://localhost:8000/api/posts/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${user.token}`
                     }
                 });
-                const json = await response.json();
-                // console.log(json);
+                const json = await response.json()
                 if (response.ok) {
                     setPost(json);
                 }
@@ -39,7 +39,7 @@ const DairyPost = () => {
                     ?
                     <Spinner />
                     :
-                    <PostDetails key={post._id} post={post} setContentFull="YES" />
+                    <SinglePost key={post._id} post={post} />
             }
             <Footer />
         </>

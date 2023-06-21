@@ -8,6 +8,7 @@ import Resgister from './pages/Register'
 import Error404 from './pages/Error404'
 import DairyPost from './pages/DairyPost'
 import CreatePost from './pages/CreatePost'
+// import { EditPost } from './pages/EditPost'
 // import Navbar from './pages/Navbar'
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
                 <Route path="/api/register" element={!user ? <Resgister /> : <Navigate to='/'/> } />
                 <Route path='/api/posts/:id' element={user ? <DairyPost /> : <Navigate to='/api/login'/>} />
                 <Route path='/api/createpost' element={user ? <CreatePost /> : <Navigate to='/api/login'/>} />
+                {/* <Route path='/api/editpost/:id' element={user ? <EditPost /> : <Navigate to='/api/login'/>} /> */}
                 <Route path="/*" element={<Error404 />} />
             </Routes>
         </Router>

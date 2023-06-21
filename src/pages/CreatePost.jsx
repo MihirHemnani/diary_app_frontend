@@ -18,6 +18,7 @@ const CreatePost = () => {
         }
 
         try {
+            // const response = await fetch(`http://localhost:8000/api/posts`, {
             const response = await fetch(`https://dairy-post-api.onrender.com/api/posts`, {
                 method: "POST",
                 headers: {
@@ -32,8 +33,6 @@ const CreatePost = () => {
             if (response.ok) {
                 reset({ title: "", date: new Date().toISOString().slice(0, 10), content: "" });
                 dispatch({ type: 'CREATE_POST', payload: newPost })
-
-                // console.log(posts);
             }
 
         } catch (err) {
