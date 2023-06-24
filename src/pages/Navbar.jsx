@@ -24,6 +24,7 @@ const Navbar = () => {
                             {user &&
                                 <li className="nav-item">
                                     <Link to='/api/createpost' className="nav-link mt-1" aria-current="page">Create</Link>
+                                    <Link to='/' className="nav-link mt-1" aria-current="page">Home</Link>
                                 </li>
                             }
 
