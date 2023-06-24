@@ -33,6 +33,7 @@ const PostDetails = ({ post }) => {
             }
 
         } catch (err) {
+            swal("Oops!", "Something went wrong...", "error");
             console.log(err);
         }
     }
