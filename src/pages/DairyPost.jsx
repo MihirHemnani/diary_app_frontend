@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import { Spinner } from "../components/Spinner";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { SinglePost } from "../components/SinglePost";
+import swal from "sweetalert";
 
 const DairyPost = () => {
     const { user } = useAuthContext();
@@ -25,6 +26,7 @@ const DairyPost = () => {
                     setPost(json);
                 }
             } catch (err) {
+                swal("Oops!", "Something went wrong...", "error");
                 console.log(err);
             }
         }

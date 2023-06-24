@@ -36,6 +36,7 @@ const Resgister = () => {
             console.log(json)
 
         } catch (err) {
+            swal("Oops!", "Something went wrong...", "error");
             console.log(err);
         }
 
@@ -71,13 +72,11 @@ const Resgister = () => {
 
                                             <div className="col-12">
                                                 <label htmlFor="yourUsername" className="form-label">Username</label>
-                                                <div className="input-group has-validation">
-                                                    <input type="text"
-                                                        autoComplete="off"
-                                                        {...register("username", { required: 'required field' })}
-                                                        className="form-control" id="yourUsername" />
-                                                    <p>{errors.username?.message}</p>
-                                                </div>
+                                                <input type="text"
+                                                    autoComplete="off"
+                                                    {...register("username", { required: 'required field' })}
+                                                    className="form-control" id="yourUsername" />
+                                                <p>{errors.username?.message}</p>
                                             </div>
 
                                             <div className="col-12">

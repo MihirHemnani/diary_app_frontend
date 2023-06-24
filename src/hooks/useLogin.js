@@ -33,6 +33,7 @@ export const useLogin = () => {
             }
 
         } catch (err) {
+            swal("Oops!", "Something went wrong...", "error");
             console.log(err);
         }
     }

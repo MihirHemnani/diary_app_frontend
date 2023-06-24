@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Spinner } from "../components/Spinner.jsx";
 import { useAuthContext } from "../hooks/useAuthContext.js";
+import swal from "sweetalert";
 
 const Home = () => {
     // don't use useState for global state management
@@ -36,6 +37,7 @@ const Home = () => {
                 }
 
             } catch (err) {
+                swal("Oops!", "Something went wrong...", "error");
                 console.log(err);
             }
 
