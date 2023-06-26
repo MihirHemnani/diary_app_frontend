@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react'
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useForm } from 'react-hook-form'
 import swal from 'sweetalert';
 
 const PasswordReset = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // eslint-disable-next-line
-    const history = useNavigate();
     const { id, token } = useParams();
 
     const userValid = async () => {
-        // const response = await fetch(`http://localhost:8000/api/user/${id}/${token}`, {
-        const response = await fetch(`https://dairy-post-api.onrender.com/api/user/${id}/${token}`, {
+        // const response = await fetch(`http://localhost:8000/api/user/validuser/${id}/${token}`, {
+        const response = await fetch(`https://dairy-post-api.onrender.com/api/user/validuser/${id}/${token}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -20,10 +19,11 @@ const PasswordReset = () => {
 
         const data = await response.json();
 
+        // console.log(data);
         if (response.ok) {
             console.log(data);
         } else {
-            history("*")
+            swal("Oops", "Link Expired", "error")
         }
     }
 
@@ -36,8 +36,8 @@ const PasswordReset = () => {
         const { newpassword, confirmpassword } = data;
         if (newpassword === confirmpassword) {
             try {
-                const response = await fetch(`https://dairy-post-api.onrender.com/api/user/${id}/${token}`, {
-                    // const response = await fetch(`http://localhost:8000/api/user/${id}/${token}`, {
+                const response = await fetch(`https://dairy-post-api.onrender.com/api/user/forgetpassword/${id}/${token}`, {
+                    // const response = await fetch(`http://localhost:8000/api/user/forgetpassword/${id}/${token}`, {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ const PasswordReset = () => {
                     swal("Warning!", json.message, "warning");
                 }
             } catch (err) {
-                swal("Oops!", "err", "error");
+                swal("Oops!", err.message, "error");
                 console.log(err);
             }
         } else {

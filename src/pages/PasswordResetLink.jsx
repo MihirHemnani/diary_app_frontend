@@ -13,8 +13,8 @@ const PasswordResetLink = () => {
         // console.log(data)
         const email = data.email;
         try {
-            const response = await fetch(`https://dairy-post-api.onrender.com/api/user/sendResetLink`, {
-                // const response = await fetch(`http://localhost:8000/api/user/sendResetLink`, {
+            const response = await fetch(`https://dairy-post-api.onrender.com/api/user/sendresetlink`, {
+                // const response = await fetch(`http://localhost:8000/api/user/sendresetlink`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
