@@ -22,10 +22,15 @@ const Navbar = () => {
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul className="navbar-nav me-auto">
                             {user &&
-                                <li className="nav-item">
-                                    <Link to='/' className="nav-link mt-1" aria-current="page">Home</Link>
-                                    <Link to='/api/createpost' className="nav-link mt-1" aria-current="page">Create</Link>
-                                </li>
+                                <>
+                                    <li className="nav-item">
+                                        <Link to='/' className="nav-link mt-1" aria-current="page">Home</Link>
+                                        <Link to='/api/createpost' className="nav-link mt-1" aria-current="page">Create</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to='/api/createpost' className="nav-link mt-1" aria-current="page">Create</Link>
+                                    </li>
+                                </>
                             }
 
                         </ul>
