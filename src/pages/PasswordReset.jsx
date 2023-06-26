@@ -1,107 +1,139 @@
-import React from 'react'
-import { Link } from "react-router-dom"
+import React, { useEffect } from 'react'
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { useForm } from 'react-hook-form'
-import Footer from './Footer'
-import Navbar from './Navbar'
-import swal from 'sweetalert'
+import swal from 'sweetalert';
 
 const PasswordReset = () => {
-    // eslint-disable-next-line
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    // eslint-disable-next-line
+    const history = useNavigate();
+    const { id, token } = useParams();
+
+    const userValid = async () => {
+        const response = await fetch(`https://dairy-post-api.onrender.com/api/user/validuser/${id}/${token}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const data = await response.json();
+
+        if (data.ok) {
+
+        } else {
+            history("*")
+        }
+    }
+
+    useEffect(() => {
+        userValid()
+    }, [id, token])
 
     const onSubmit = async (data) => {
         // console.log(data)
-        const email = data.email;
-        try {
-            const response = await fetch(`https://dairy-post-api.onrender.com/api/user/forget_password`, {
-                // const response = await fetch(`http://localhost:8000/api/user/passwordreset`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email })
-            })
+        const { newpassword, confirmpassword } = data;
+        if (newpassword === confirmpassword) {
+            try {
+                const response = await fetch(`https://dairy-post-api.onrender.com/api/user/forgetpassword/${id}/${token}`, {
+                    // const response = await fetch(`http://localhost:8000/api/user/sendResetLink`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ newpassword })
+                })
 
-            // eslint-disable-next-line
-            const json = await response.json()
+                // eslint-disable-next-line
+                const json = await response.json()
 
-            if (response.ok) {
-                reset({ username: "", email: "", password: "" });
-                swal("Success!", "Email Sent...", "success");
+                if (response.ok) {
+                    reset({ username: "", email: "", password: "" });
+                    swal("Success!", "Email Sent...", "success");
 
-            } else {
-                swal("Warning!", json.error, "warning");
+                } else {
+                    swal("Warning!", json.error, "warning");
+                }
+                console.log(json)
+
+            } catch (err) {
+                swal("Oops!", "Something went wrong...", "error");
+                console.log(err);
             }
-            console.log(json)
-
-        } catch (err) {
-            swal("Oops!", "Something went wrong...", "error");
-            console.log(err);
+        } else {
+            swal("Warning!", "The new password and confirm password do not match.\nPlease make sure you enter the same password in both fields.", "warning");
         }
-
     }
     return (
-        <>
-            <Navbar />
-            <div className="container">
+        <div className="container">
 
-                <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center">
-                    <div className="container" style={{ marginTop: "5rem", marginBottom: "3rem" }}>
-                        <div className="row justify-content-center">
-                            <div className="col-lg-4 col-md-6  d-flex flex-column align-items-center justify-content-center">
+            <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center">
+                <div className="container" style={{ marginTop: "5rem", marginBottom: "3rem" }}>
+                    <div className="row justify-content-center">
+                        <div className="col-lg-4 col-md-6  d-flex flex-column align-items-center justify-content-center">
 
-                                {/* <div className="d-flex justify-content-center py-4">
+                            {/* <div className="d-flex justify-content-center py-4">
                                     <a href="index.html" className="logo d-flex align-items-center w-auto">
                                         <span className="d-none d-lg-block">NiceAdmin</span>
                                     </a>
                                 </div> */}
 
-                                <div className="card">
+                            <div className="card">
 
-                                    <div className="card-body" style={{ textDecoration: 'none' }}>
+                                <div className="card-body" style={{ textDecoration: 'none' }}>
 
-                                        <div className="pt-4 pb-2">
-                                            <h5 className="card-title text-center pb-0 fs-4">Password Reset</h5>
+                                    <div className="pt-4 pb-2">
+                                        <h5 className="card-title text-center pb-0 fs-4">Reset Password</h5>
+                                    </div>
+
+                                    <form className="row g-3 needs-validation" onSubmit={handleSubmit(onSubmit)}>
+
+                                        <div className="col-12">
+                                            <label htmlFor="yourEmail" className="form-label">New Password</label>
+                                            <div className="input-group has-validation">
+                                                <input type="text"
+                                                    autoComplete="off"
+                                                    {...register("newpassword", { required: 'required field' })}
+                                                    className="form-control" id="yourEmail" />
+                                            </div>
+                                            <p>{errors.newpassword?.message}</p>
                                         </div>
 
-                                        <form className="row g-3 needs-validation" onSubmit={handleSubmit(onSubmit)}>
-
-                                            <div className="col-12">
-                                                <label htmlFor="yourEmail" className="form-label">Email</label>
-                                                <div className="input-group has-validation">
-                                                    <input type="email"
-                                                        autoComplete="off"
-                                                        {...register("email", { required: 'required field' })}
-                                                        className="form-control" id="yourEmail" />
-                                                </div>
-                                                <p>{errors.email?.message}</p>
+                                        <div className="col-12">
+                                            <label htmlFor="yourPassword" className="form-label">Confirm Password</label>
+                                            <div className="input-group has-validation">
+                                                <input type="password"
+                                                    autoComplete="off"
+                                                    {...register("confirmpassword", { required: 'required field' })}
+                                                    className="form-control" id="yourPassword" />
                                             </div>
+                                            <p>{errors.confirmpassword?.message}</p>
+                                        </div>
 
+                                        <div className="col-12">
+                                            <button className="btn btn-success w-100" type="submit">Submit</button>
+                                        </div>
 
-                                            <div className="col-12">
-                                                <button className="btn btn-primary w-100" type="submit">Submit</button>
-                                            </div>
-                                            <div className="col-12">
-                                                <Link to="/" className='btn btn-primary w-100'>Go Back</Link>
-                                            </div>
-                                        </form>
+                                        <div className="col-12">
+                                            <Link to="/" className='btn btn-primary w-100'>Go Back to Login</Link>
+                                        </div>
 
-                                    </div>
+                                    </form>
+
                                 </div>
+                            </div>
 
-                                {/* <div className="credits">
+                            {/* <div className="credits">
                                     Designed by Mihir
                                 </div> */}
 
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                </section>
+            </section>
 
-            </div>
-            <Footer />
-        </>
+        </div>
     )
 }
 
