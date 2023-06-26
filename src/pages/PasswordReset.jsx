@@ -1,20 +1,45 @@
+import React from 'react'
 import { Link } from "react-router-dom"
 import { useForm } from 'react-hook-form'
-import { useLogin } from '../hooks/useLogin';
-import Navbar from "./Navbar"
-import Footer from "./Footer"
+import Footer from './Footer'
+import Navbar from './Navbar'
+import swal from 'sweetalert'
 
-const Login = () => {
-
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+const PasswordReset = () => {
     // eslint-disable-next-line
-    const { login, reset_ } = useLogin();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
         // console.log(data)
-        await login(data.email, data.password, reset)
-    }
+        const email = data.email;
+        try {
+            const response = await fetch(`https://dairy-post-api.onrender.com/api/user/forget_password`, {
+                // const response = await fetch(`http://localhost:8000/api/user/passwordreset`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            })
 
+            // eslint-disable-next-line
+            const json = await response.json()
+
+            if (response.ok) {
+                reset({ username: "", email: "", password: "" });
+                swal("Success!", "Email Sent...", "success");
+
+            } else {
+                swal("Warning!", json.error, "warning");
+            }
+            console.log(json)
+
+        } catch (err) {
+            swal("Oops!", "Something went wrong...", "error");
+            console.log(err);
+        }
+
+    }
     return (
         <>
             <Navbar />
@@ -36,7 +61,7 @@ const Login = () => {
                                     <div className="card-body" style={{ textDecoration: 'none' }}>
 
                                         <div className="pt-4 pb-2">
-                                            <h5 className="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                                            <h5 className="card-title text-center pb-0 fs-4">Password Reset</h5>
                                         </div>
 
                                         <form className="row g-3 needs-validation" onSubmit={handleSubmit(onSubmit)}>
@@ -52,26 +77,12 @@ const Login = () => {
                                                 <p>{errors.email?.message}</p>
                                             </div>
 
-                                            <div className="col-12">
-                                                <label htmlFor="yourPassword" className="form-label">Password</label>
-                                                <div className="input-group has-validation">
-                                                    <input type="password"
-                                                        autoComplete="off"
-                                                        {...register("password", { required: 'required field' })}
-                                                        className="form-control" id="yourPassword" />
-                                                </div>
-                                                <p>{errors.password?.message}</p>
-                                            </div>
 
                                             <div className="col-12">
-                                                <p className="small mb-1 mt-0">Forget Password? <Link to="/api/password_reset">Click Here</Link></p>
-                                            </div>
-
-                                            <div className="col-12">
-                                                <button className="btn btn-primary w-100" type="submit">Login</button>
+                                                <button className="btn btn-primary w-100" type="submit">Submit</button>
                                             </div>
                                             <div className="col-12">
-                                                <p className="small mb-0">Don't have account? <Link to="/api/register">Create an account</Link></p>
+                                                <Link to="/" className='btn btn-primary w-100'>Go Back</Link>
                                             </div>
                                         </form>
 
@@ -94,4 +105,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default PasswordReset
