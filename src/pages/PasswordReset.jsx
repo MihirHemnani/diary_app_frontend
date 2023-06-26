@@ -10,7 +10,7 @@ const PasswordReset = () => {
     const { id, token } = useParams();
 
     const userValid = async () => {
-        const response = await fetch(`https://dairy-post-api.onrender.com/api/user/validuser/${id}/${token}`, {
+        const response = await fetch(`http://localhost:8000/api/user/validuser/${id}/${token}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -19,8 +19,8 @@ const PasswordReset = () => {
 
         const data = await response.json();
 
-        if (data.ok) {
-
+        if (response.ok) {
+            console.log(data);
         } else {
             history("*")
         }
@@ -35,8 +35,8 @@ const PasswordReset = () => {
         const { newpassword, confirmpassword } = data;
         if (newpassword === confirmpassword) {
             try {
-                const response = await fetch(`https://dairy-post-api.onrender.com/api/user/forgetpassword/${id}/${token}`, {
-                    // const response = await fetch(`http://localhost:8000/api/user/sendResetLink`, {
+                // const response = await fetch(`https://dairy-post-api.onrender.com/api/user/forgetpassword/${id}/${token}`, {
+                const response = await fetch(`http://localhost:8000/api/user/forgetpassword/${id}/${token}`, {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json'
@@ -46,18 +46,15 @@ const PasswordReset = () => {
 
                 // eslint-disable-next-line
                 const json = await response.json()
-
                 if (response.ok) {
-                    reset({ username: "", email: "", password: "" });
-                    swal("Success!", "Email Sent...", "success");
+                    reset({ newpassword: "", confirmpassword: "" });
+                    swal("Success!", "Password Changed...", "success");
 
                 } else {
-                    swal("Warning!", json.error, "warning");
+                    swal("Warning!", json.message, "warning");
                 }
-                console.log(json)
-
             } catch (err) {
-                swal("Oops!", "Something went wrong...", "error");
+                swal("Oops!", "err", "error");
                 console.log(err);
             }
         } else {
