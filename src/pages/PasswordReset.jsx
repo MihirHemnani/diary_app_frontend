@@ -10,8 +10,8 @@ const PasswordReset = () => {
     const { id, token } = useParams();
 
     const userValid = async () => {
-        // const response = await fetch(`http://localhost:8000/api/user/validuser/${id}/${token}`, {
-        const response = await fetch(`https://dairy-post-api.onrender.com/api/user/validuser/${id}/${token}`, {
+        // const response = await fetch(`http://localhost:8000/api/user/${id}/${token}`, {
+        const response = await fetch(`https://dairy-post-api.onrender.com/api/user/${id}/${token}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -29,15 +29,15 @@ const PasswordReset = () => {
 
     useEffect(() => {
         userValid()
-    }, [id, token])
+    }, [])
 
     const onSubmit = async (data) => {
         // console.log(data)
         const { newpassword, confirmpassword } = data;
         if (newpassword === confirmpassword) {
             try {
-                // const response = await fetch(`https://dairy-post-api.onrender.com/api/user/forgetpassword/${id}/${token}`, {
-                const response = await fetch(`http://localhost:8000/api/user/forgetpassword/${id}/${token}`, {
+                const response = await fetch(`https://dairy-post-api.onrender.com/api/user/${id}/${token}`, {
+                    // const response = await fetch(`http://localhost:8000/api/user/${id}/${token}`, {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json'
