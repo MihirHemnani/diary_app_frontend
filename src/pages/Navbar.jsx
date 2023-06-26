@@ -25,7 +25,6 @@ const Navbar = () => {
                                 <>
                                     <li className="nav-item">
                                         <Link to='/' className="nav-link mt-1" aria-current="page">Home</Link>
-                                        <Link to='/api/createpost' className="nav-link mt-1" aria-current="page">Create</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link to='/api/createpost' className="nav-link mt-1" aria-current="page">Create</Link>
