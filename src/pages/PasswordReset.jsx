@@ -10,7 +10,8 @@ const PasswordReset = () => {
     const { id, token } = useParams();
 
     const userValid = async () => {
-        const response = await fetch(`http://localhost:8000/api/user/validuser/${id}/${token}`, {
+        // const response = await fetch(`http://localhost:8000/api/user/validuser/${id}/${token}`, {
+        const response = await fetch(`https://dairy-post-api.onrender.com/api/user/validuser/${id}/${token}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
