@@ -5,7 +5,7 @@ import { useAuthContext } from './hooks/useAuthContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Resgister from './pages/Register'
-// import Error404 from './pages/Error404'
+import Error404 from './pages/Error404'
 import DairyPost from './pages/DairyPost'
 import CreatePost from './pages/CreatePost'
 import PasswordReset from './pages/PasswordReset'
@@ -30,7 +30,7 @@ const App = () => {
                 <Route path='/api/password_otp/:id/:token' element={!user ? <PasswordOTP /> : <Navigate to='/'/>} />
                 <Route path='/api/password_reset/:id/:token' element={!user ? <PasswordReset /> : <Navigate to='/'/>} />
                 {/* <Route path='/api/editpost/:id' element={user ? <EditPost /> : <Navigate to='/api/login'/>} /> */}
-                <Route path="/*" element={user ? <Home /> : <Navigate to='/api/login'/>} />
+                <Route path="/*" element={<Error404 /> } />
             </Routes>
         </Router>
         
