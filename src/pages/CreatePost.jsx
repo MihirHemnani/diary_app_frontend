@@ -4,8 +4,10 @@ import Navbar from "./Navbar"
 import Footer from './Footer';
 import { useAuthContext } from '../hooks/useAuthContext';
 import swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePost = () => {
+    const navigate = useNavigate();
     const { dispatch } = usePostsContext();
     const { user } = useAuthContext();
     // eslint-disable-next-line
@@ -34,7 +36,9 @@ const CreatePost = () => {
             if (response.ok) {
                 reset({ title: "", date: new Date().toISOString().slice(0, 10), content: "" });
                 dispatch({ type: 'CREATE_POST', payload: newPost })
-                swal("Success!", "Post Created Successfully", "success");
+                swal("Success!", "Post Created Successfully", "success").then(() => {
+                    navigate(`/api/posts/${newPost._id}`);
+                })
             } else {
                 swal("Oops!", newPost.error, "error");
 

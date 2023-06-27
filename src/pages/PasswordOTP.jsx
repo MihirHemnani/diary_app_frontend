@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from "react-router-dom"
+import React, { useEffect } from 'react'
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { useForm } from 'react-hook-form'
 import swal from 'sweetalert'
 
@@ -7,12 +7,38 @@ const PasswordOTP = () => {
     // eslint-disable-next-line
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
+    const navigate = useNavigate();
+    const { id, token } = useParams();
+    const userValid = async () => {
+        // const response = await fetch(`http://localhost:8000/api/user/validuser/${id}/${token}`, {
+        const response = await fetch(`https://dairy-post-api.onrender.com/api/user/validuser/${id}/${token}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const data = await response.json();
+
+        // console.log(data);
+        if (response.ok) {
+            console.log(data);
+        } else {
+            swal("Oops", "Link Expired", "error")
+        }
+    }
+
+    useEffect(() => {
+        userValid()
+        // eslint-disable-next-line
+    }, [])
+
     const onSubmit = async (data) => {
         // console.log(data)
         const otp = data.otp;
         try {
-            const response = await fetch(`https://dairy-post-api.onrender.com/api/user/sendresetlink`, {
-                // const response = await fetch(`http://localhost:8000/api/user/sendresetlink`, {
+            const response = await fetch(`https://dairy-post-api.onrender.com/api/user/password_otp/${id}/${token}`, {
+                // const response = await fetch(`http://localhost:8000/api/user/password_otp/${id}/${token}`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -22,15 +48,15 @@ const PasswordOTP = () => {
 
             // eslint-disable-next-line
             const json = await response.json()
-
             if (response.ok) {
-                reset({ username: "", email: "", password: "" });
-                swal("Success!", "Email Sent...", "success");
+                reset({ newpassword: "", confirmpassword: "" });
+                swal("Success!", "OTP verified", "success").then(() => {
+                    navigate(`/api/password_reset/${id}/${token}`);
+                })
 
             } else {
-                swal("Warning!", json.error, "warning");
+                swal("Warning!", json.message, "warning");
             }
-            console.log(json)
 
         } catch (err) {
             swal("Oops!", "Something went wrong...", "error");

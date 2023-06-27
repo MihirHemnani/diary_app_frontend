@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { useForm } from 'react-hook-form'
 import swal from 'sweetalert';
 
@@ -7,6 +7,7 @@ const PasswordReset = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // eslint-disable-next-line
     const { id, token } = useParams();
+    const navigate = useNavigate();
 
     const userValid = async () => {
         // const response = await fetch(`http://localhost:8000/api/user/validuser/${id}/${token}`, {
@@ -50,7 +51,9 @@ const PasswordReset = () => {
                 const json = await response.json()
                 if (response.ok) {
                     reset({ newpassword: "", confirmpassword: "" });
-                    swal("Success!", "Password Changed...", "success");
+                    swal("Success!", "Password Changed...", "success").then(() => {
+                        navigate("/api/login")
+                    })
 
                 } else {
                     swal("Warning!", json.message, "warning");

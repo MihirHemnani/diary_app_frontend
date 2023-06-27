@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useForm } from 'react-hook-form'
 import Navbar from "./Navbar"
 import Footer from "./Footer"
@@ -6,7 +6,7 @@ import swal from "sweetalert"
 
 const Resgister = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-
+    const navigate = useNavigate();
     const onSubmit = async data => {
         const register_user = {
             username: data.username,
@@ -29,7 +29,9 @@ const Resgister = () => {
 
             if (response.ok) {
                 reset({ username: "", email: "", password: "" });
-                swal("Success!", "Successfully Registered...", "success");
+                swal("Success!", "Successfully Registered...", "success").then(() => {
+                    navigate("/api/login")
+                })
 
             } else {
                 swal("Warning!", json.error, "warning");
