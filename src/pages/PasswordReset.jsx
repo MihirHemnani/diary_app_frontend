@@ -24,14 +24,16 @@ const PasswordReset = () => {
         if (response.ok) {
             console.log(data);
         } else {
-            swal("Oops", "Link Expired", "error")
+            swal("Oops", "Link Expired", "error").then(() => {
+                navigate("/api/login");
+            })
         }
     }
 
     useEffect(() => {
         userValid()
         // eslint-disable-next-line
-    }, [])
+    }, [id, token])
 
     const onSubmit = async (data) => {
         // console.log(data)
