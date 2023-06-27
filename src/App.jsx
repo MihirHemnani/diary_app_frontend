@@ -10,6 +10,7 @@ import DairyPost from './pages/DairyPost'
 import CreatePost from './pages/CreatePost'
 import PasswordReset from './pages/PasswordReset'
 import PasswordResetLink from './pages/PasswordResetLink'
+import PasswordOTP from './pages/PasswordOTP'
 // import { EditPost } from './pages/EditPost'
 // import Navbar from './pages/Navbar'
 
@@ -26,6 +27,7 @@ const App = () => {
                 <Route path='/api/posts/:id' element={user ? <DairyPost /> : <Navigate to='/api/login'/>} />
                 <Route path='/api/createpost' element={user ? <CreatePost /> : <Navigate to='/api/login'/>} />
                 <Route path='/api/password_reset_link' element={!user ? <PasswordResetLink /> : <Navigate to='/'/>} />
+                <Route path='/api/password_otp/:id/:token' element={!user ? <PasswordOTP /> : <Navigate to='/'/>} />
                 <Route path='/api/password_reset/:id/:token' element={!user ? <PasswordReset /> : <Navigate to='/'/>} />
                 {/* <Route path='/api/editpost/:id' element={user ? <EditPost /> : <Navigate to='/api/login'/>} /> */}
                 <Route path="/*" element={<Error404 />} />

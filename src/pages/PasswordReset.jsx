@@ -29,6 +29,7 @@ const PasswordReset = () => {
 
     useEffect(() => {
         userValid()
+        // eslint-disable-next-line
     }, [])
 
     const onSubmit = async (data) => {

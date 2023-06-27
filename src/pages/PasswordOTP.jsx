@@ -1,17 +1,15 @@
 import React from 'react'
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useForm } from 'react-hook-form'
-import Footer from './Footer'
-import Navbar from './Navbar'
 import swal from 'sweetalert'
 
-const PasswordResetLink = () => {
+const PasswordOTP = () => {
     // eslint-disable-next-line
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const navigate = useNavigate();
+
     const onSubmit = async (data) => {
         // console.log(data)
-        const email = data.email;
+        const otp = data.otp;
         try {
             const response = await fetch(`https://dairy-post-api.onrender.com/api/user/sendresetlink`, {
                 // const response = await fetch(`http://localhost:8000/api/user/sendresetlink`, {
@@ -19,22 +17,20 @@ const PasswordResetLink = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email })
+                body: JSON.stringify({ otp })
             })
 
             // eslint-disable-next-line
             const json = await response.json()
-            console.log(json)
 
             if (response.ok) {
                 reset({ username: "", email: "", password: "" });
-                swal("Success!", "Email Sent...", "success").then(() => {
-                    navigate(`/api/password_otp/${json.id}/${json.token}`);
-                })
+                swal("Success!", "Email Sent...", "success");
 
             } else {
                 swal("Warning!", json.error, "warning");
             }
+            console.log(json)
 
         } catch (err) {
             swal("Oops!", "Something went wrong...", "error");
@@ -44,7 +40,6 @@ const PasswordResetLink = () => {
     }
     return (
         <>
-            <Navbar />
             <div className="container">
 
                 <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center">
@@ -69,14 +64,14 @@ const PasswordResetLink = () => {
                                         <form className="row g-3 needs-validation" onSubmit={handleSubmit(onSubmit)}>
 
                                             <div className="col-12">
-                                                <label htmlFor="yourEmail" className="form-label">Email</label>
+                                                <label htmlFor="yourotp" className="form-label">Enter OTP</label>
                                                 <div className="input-group has-validation">
-                                                    <input type="email"
+                                                    <input type="text"
                                                         autoComplete="off"
-                                                        {...register("email", { required: 'required field' })}
-                                                        className="form-control" id="yourEmail" />
+                                                        {...register("otp", { required: 'required field' })}
+                                                        className="form-control" id="yourotp" />
                                                 </div>
-                                                <p>{errors.email?.message}</p>
+                                                <p>{errors.otp?.message}</p>
                                             </div>
 
                                             <div className="col-12">
@@ -101,9 +96,8 @@ const PasswordResetLink = () => {
                 </section>
 
             </div>
-            <Footer />
         </>
     )
 }
 
-export default PasswordResetLink
+export default PasswordOTP
