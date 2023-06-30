@@ -45,7 +45,8 @@ const Home = () => {
 
         // calling the function
         fetchPosts();
-    }, [user, dispatch])
+        // eslint-disable-next-line
+    }, [])
 
 
     return (

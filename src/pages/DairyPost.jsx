@@ -31,7 +31,8 @@ const DairyPost = () => {
             }
         }
         fetchPost()
-    }, [user, id])
+        // eslint-disable-next-line
+    }, [id])
 
     return (
         <>
