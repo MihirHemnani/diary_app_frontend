@@ -18,7 +18,6 @@ const Login = () => {
         // console.log(data)
         await login(data.email, data.password, reset).then(() => {
             setLoader(false)
-            reset({ email: "", password: "" })
         })
     }
 
