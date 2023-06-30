@@ -25,11 +25,11 @@ const UserDetails = () => {
                     <tbody>
                         <tr>
                             <td>Name</td>
-                            <td>{user.user.username}</td>
+                            <td>{user.username}</td>
                         </tr>
                         <tr>
                             <td>Email id</td>
-                            <td>{user.user.email}</td>
+                            <td>{user.email}</td>
                         </tr>
                     </tbody>
                 </table>
