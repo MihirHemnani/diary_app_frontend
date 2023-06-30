@@ -3,21 +3,29 @@ import { useForm } from 'react-hook-form'
 import { useLogin } from '../hooks/useLogin';
 import Navbar from "./Navbar"
 import Footer from "./Footer"
+import { useState } from "react";
+import { Spinner } from "../components/Spinner";
 
 const Login = () => {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // eslint-disable-next-line
     const { login, reset_ } = useLogin();
+    const [loader, setLoader] = useState(false);
 
     const onSubmit = async (data) => {
+        setLoader(true)
         // console.log(data)
-        await login(data.email, data.password, reset)
+        await login(data.email, data.password, reset).then(() => {
+            setLoader(false)
+            reset({ email: "", password: "" })
+        })
     }
 
     return (
         <>
             <Navbar />
+            {loader && <Spinner />}
             <div className="container">
 
                 <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center">
