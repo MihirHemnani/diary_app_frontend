@@ -69,7 +69,7 @@ export const SinglePost = ({ post }) => {
                     ?
                     (
                         <div className="min-vh-100" style={{ position: "relative", marginTop: '8rem' }}>
-                            <div className="card-body" style={{ maxWidth: "50rem", textDecoration: "none", margin: 'auto', marginTop: "2rem", textAlign: "justify" }}>
+                            <div className="card-body" style={{ maxWidth: "50rem", textDecoration: "none", margin: 'auto', marginTop: "2rem" }}>
                                 <h2 className="card-title mb-3" style={{ color: 'grey', textAlign: "center" }}><strong>{singlepost.postTitle}</strong></h2>
                                 <p className="card-text p-1" style={{ maxWidth: "100%", whiteSpace: 'pre-wrap', overflowX: "auto" }}>
                                     {singlepost.postContent}
@@ -79,12 +79,12 @@ export const SinglePost = ({ post }) => {
                                 <hr />
                                 <h6 className="card-text mt-1" >{format(new Date(singlepost.postDate), 'd MMMM, y')}</h6>
                             </div>
-                        </div >
+                        </div>
                     )
 
                     :
                     (
-                        < div className="card min-vh-100 mt-5">
+                        <div className="card min-vh-100 mt-5">
                             <h4 className="card-title mt-5 p-3 m-auto">Edit Post</h4>
                             <div className="card-body m-auto">
 
