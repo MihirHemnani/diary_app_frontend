@@ -19,7 +19,7 @@ const Navbar = () => {
                 <div className="container-fluid" style={{ textAlign: 'center' }}>
                     <Link to='/' className="navbar-brand"><img style={{ width: '2.5rem', height: '2.5rem', borderRadius: '1.5rem' }}
                         src="https://w7.pngwing.com/pngs/436/218/png-transparent-diary-illustration-diary-diary-and-pen-pencil-text-happy-birthday-vector-images.png" alt="dairy_logo" /></Link>
-                    <Link to='/' className="navbar-brand"><h2 style={{ marginLeft: "1rem" }}>Dairy</h2></Link>
+                    <Link to='/' className="navbar-brand"><h2 style={{ marginLeft: "1rem" }}>Diary</h2></Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
